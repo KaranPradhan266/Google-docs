@@ -82,12 +82,14 @@ const FontSizeButton = () => {
 
   const handleInputBlur = () => {
     updateFontSize(inputValue);
+    setIsEditing(false);
   }
 
   const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
     if(e.key === "Enter"){
         e.preventDefault();
         updateFontSize(inputValue);
+        setIsEditing(false);
         editor?.commands.focus();
     }
   }
