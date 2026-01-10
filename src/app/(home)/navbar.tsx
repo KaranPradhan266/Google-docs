@@ -1,7 +1,7 @@
 import Link from "next/link";
 import Image from "next/image";
 import SearchInput from "./search-input";
-
+import {UserButton} from "@clerk/nextjs";
 
 const navbar = () => {
   return (
@@ -13,7 +13,7 @@ const navbar = () => {
             <h3 className="text-xl">Collab RT</h3>
         </div>
         <SearchInput />
-        <div />
+        <UserButton />
     </nav>
   )
 }
