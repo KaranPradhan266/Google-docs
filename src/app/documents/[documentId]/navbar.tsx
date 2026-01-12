@@ -14,15 +14,19 @@ import {
     MenubarSubTrigger,
     MenubarTrigger,
  } from '@/components/ui/menubar';
-import DocumentInput from './document-input';
+import {DocumentInput} from './document-input';
 import { BoldIcon, Download, FileIcon, FileJsonIcon, FilePenIcon, FilePlusIcon, FileTextIcon, GlobeIcon, ItalicIcon, PrinterIcon, Redo2Icon, RemoveFormatting, RemoveFormattingIcon, StrikethroughIcon, TextIcon, TrashIcon, Underline, UnderlineIcon, Undo2Icon } from 'lucide-react';
 import { BsFilePdf } from 'react-icons/bs';
 import { useEditorStore } from '@/store/use-editor-store';
 import { OrganizationSwitcher, UserButton } from '@clerk/nextjs';
 import { Avatars } from './avatar';
 import { Inbox } from './inbox';
+import { Doc } from '../../../../convex/_generated/dataModel';
+interface NavbarProps {
+    data: Doc<"documents">;
+};
 
-const Navbar = () => {
+const Navbar = ({data}: NavbarProps) => {
   const { editor } = useEditorStore();
   const insertTable = ({rows, cols}: {rows: number, cols: number}) => {
     editor
@@ -47,7 +51,7 @@ const Navbar = () => {
     const blob = new Blob([JSON.stringify(content)],{
         type: "application/json",
     });
-    onDownload(blob, 'document.json');
+    onDownload(blob, `${data.title}.json`);
   };
 
   const onSaveHtml = () => {
@@ -57,7 +61,7 @@ const Navbar = () => {
     const blob = new Blob([content],{
         type: "text/html",
     });
-    onDownload(blob, 'document.html');
+    onDownload(blob, `${data.title}.html`);
   };
 
   const onSaveText = () => {
@@ -67,7 +71,7 @@ const Navbar = () => {
     const blob = new Blob([content],{
         type: "text/plain",
     });
-    onDownload(blob, 'document.txt');
+    onDownload(blob, `${data.title}.txt`);
   };
 
   return (
@@ -77,7 +81,7 @@ const Navbar = () => {
             <Image src="/logo.svg" alt='logo' width={30} height={30} />
           </Link>
           <div className='flex flex-col'>
-           <DocumentInput />
+           <DocumentInput title={data.title} id={data._id}/>
             <div className='flex flex-col'>
                 <Menubar className='border-none bg-transparent shadow-none h-auto p-0'>
                     <MenubarMenu>
